@@ -1,8 +1,10 @@
 import random
 import collections
 import pandas as pd
+import time
 from argparse import ArgumentParser
 from generate_matchups import generate_matchups
+from mike_round_robin import default_scramble
 
 random.seed(420)
 
@@ -18,8 +20,6 @@ class ChessTournament:
         self.players = player_list
         # How long each game takes to play
         self.game_duration = 0
-        # Mathchups that will be played.
-        self.actual_matchups = dict.fromkeys(["Round1", "Round2", "Round3"], [])
 
     def create_matchups_2(self, num_rounds):
         # Randomly shuffle the player list
@@ -27,12 +27,22 @@ class ChessTournament:
         random.shuffle(players)
         n = len(players)
 
+        start = time.perf_counter()
         # Generate matchups for each round
         for r in range(1, num_rounds + 1):
             print("-~-~- Round {0} -~-~-".format(r))
             matchups = generate_matchups(n, r)
             for m in matchups:
-                print("{0} vs. {1}".format(players[m[0]-1], players[m[1]-1]))
+                print("{0} vs. {1}".format(players[m[0] - 1], players[m[1] - 1]))
+        fin = time.perf_counter()
+        print(f"Ran in  {fin - start:0.4f} seconds")
+
+        # Round Robin alternate algorithm
+        start = time.perf_counter()
+        output = default_scramble(3, players, n)
+        print(output)
+        fin = time.perf_counter()
+        print(f"Ran in {fin - start:0.4f} seconds")
 
 
 if __name__ == "__main__":
@@ -52,16 +62,10 @@ if __name__ == "__main__":
         action="store_true"
     )
     args = parser.parse_args()
-
+    print(args)
     with open(args.players_filename) as f:
         players = [line.strip() for line in f]
     ct = ChessTournament(players)
+    print(args)
     if args.alternate_matcher:
         ct.create_matchups_2(3)
-    else:
-        ct.create_matchups(3)
-        # Outputting the df of games to be played.
-        matchup_df = pd.DataFrame.from_dict(ct.actual_matchups, orient="index")
-        matchup_df.columns = ["Game " + str(i + 1) for i in range(len(matchup_df.columns))]
-        # matchup_df.to_excel('Chess_Matchups.xlsx')
-        print(matchup_df)
