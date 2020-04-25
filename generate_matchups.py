@@ -56,18 +56,27 @@ def generate_player_matchups(num_rounds, players):
     num_players = len(players)
 
     # Create a dataframe to store the output.
+    game_cols = ['Game ' + str(game_num) for game_num in range(1, num_players // 2 + 1)]
+    bye_key = 'Bye'
+    if num_players % 2 == 1:
+        game_cols.append(bye_key)
     matchup_df = pd.DataFrame(index=['Round ' + str(i) for i in range(1, num_rounds + 1)],
-                              columns=['Game ' + str(game_num) for game_num in
-                                       range(1, num_players // 2 + 1)])
+                              columns=game_cols)
     # Randomly shuffle the player list
     random.shuffle(players)
 
     # Generate matchups for each round
     for r in range(1, num_rounds + 1):
+        round_key = 'Round ' + str(r)
         matchups = generate_matchups(num_players, r)
         for i in range(len(matchups)):
             m = matchups[i]
+            if m[1] is None:
+                # Bye
+                matchup_df.loc[round_key, bye_key] = players[m[0] - 1]
+                continue
             m_str = players[m[0] - 1] + ' vs. ' + players[m[1] - 1]
-            matchup_df.loc['Round ' + str(r), 'Game ' + str(i + 1)] = m_str
+            game_key = 'Game ' + str(i + 1)
+            matchup_df.loc[round_key, game_key] = m_str
     
     return matchup_df
