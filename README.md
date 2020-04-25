@@ -4,7 +4,8 @@ Efficiently creates incomplete/complete round robin matchups.
 # Installation
 ```
 git clone https://github.com/avadavat/round-robin-generator
-pip install requirements.txt
+cd round-robin-generator
+pip install -r requirements.txt
 ```
 
 # Usage
