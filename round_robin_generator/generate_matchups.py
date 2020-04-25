@@ -1,6 +1,7 @@
 import pandas as pd
 import random
 
+
 def apply_offset(p, n, o):
     if p == 1:
         return 1
@@ -20,16 +21,17 @@ def rotate_arr(arr, n, offset):
     for i in range(len(arr)):
         arr[i] = apply_offset(arr[i], n, offset)
 
+
 # Generates the matchups for n players playing the r-th round of the tournament
 def generate_matchups(n, r):
     if n <= 0:
-        raise Exception('Number of players must be positive')
+        raise Exception("Number of players must be positive")
     if r <= 0 or r >= n:
-        raise Exception('Round number must be within [1,n-1]')
+        raise Exception("Round number must be within [1,n-1]")
 
     # Circle method, bottom array will have more than the bottom
-    top = [(x+1) for x in range(n // 2)]
-    bottom = [(x+1) for x in range(n // 2, n)]
+    top = [(x + 1) for x in range(n // 2)]
+    bottom = [(x + 1) for x in range(n // 2, n)]
 
     # Reverse bottom
     bottom.reverse()
@@ -47,9 +49,10 @@ def generate_matchups(n, r):
         matchups.append((top[i], bottom[i]))
     # Add bye player
     if len(bottom) > len(top):
-        matchups.append((bottom[len(bottom)-1], None))
+        matchups.append((bottom[len(bottom) - 1], None))
 
     return matchups
+
 
 # Takes a list of player names and returns the matchups as a pandas data frame
 def generate_player_matchups(num_rounds, players):
@@ -58,16 +61,17 @@ def generate_player_matchups(num_rounds, players):
     num_players = len(players)
 
     # Create a dataframe to store the output.
-    game_cols = ['Game ' + str(game_num) for game_num in range(1, num_players // 2 + 1)]
-    bye_key = 'Bye'
+    game_cols = ["Game " + str(game_num) for game_num in range(1, num_players // 2 + 1)]
+    bye_key = "Bye"
     if num_players % 2 == 1:
         game_cols.append(bye_key)
-    matchup_df = pd.DataFrame(index=['Round ' + str(i) for i in range(1, num_rounds + 1)],
-                              columns=game_cols)
+    matchup_df = pd.DataFrame(
+        index=["Round " + str(i) for i in range(1, num_rounds + 1)], columns=game_cols
+    )
 
     # Generate matchups for each round
     for r in range(1, num_rounds + 1):
-        round_key = 'Round ' + str(r)
+        round_key = "Round " + str(r)
         matchups = generate_matchups(num_players, r)
         for i in range(len(matchups)):
             m = matchups[i]
@@ -75,8 +79,8 @@ def generate_player_matchups(num_rounds, players):
                 # Bye
                 matchup_df.loc[round_key, bye_key] = players[m[0] - 1]
                 continue
-            m_str = players[m[0] - 1] + ' vs. ' + players[m[1] - 1]
-            game_key = 'Game ' + str(i + 1)
+            m_str = players[m[0] - 1] + " vs. " + players[m[1] - 1]
+            game_key = "Game " + str(i + 1)
             matchup_df.loc[round_key, game_key] = m_str
-    
+
     return matchup_df

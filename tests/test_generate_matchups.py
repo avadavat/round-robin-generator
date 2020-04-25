@@ -1,12 +1,17 @@
 from random import randint
-from src import generate_matchups
+from round_robin_generator import generate_matchups
+
 
 def test_apply_offset():
     for i in range(1, 10):
-        assert generate_matchups.apply_offset(i, 10, 0) == i, "Should be idempotent on offset 0"
+        assert (
+            generate_matchups.apply_offset(i, 10, 0) == i
+        ), "Should be idempotent on offset 0"
 
     for i in range(1, 10):
-        assert generate_matchups.apply_offset(1, i, randint(1, i)) == 1, "1 should be fixed"
+        assert (
+            generate_matchups.apply_offset(1, i, randint(1, i)) == 1
+        ), "1 should be fixed"
 
     assert generate_matchups.apply_offset(8, 8, 2) == 6, "Should be 6"
     assert generate_matchups.apply_offset(7, 8, 2) == 5, "Should be 5"

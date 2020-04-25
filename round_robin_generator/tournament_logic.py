@@ -32,7 +32,7 @@ class ChessTournament:
         print(output)
 
         fin = time.perf_counter()
-        print("Ran in  {0:0.4f} seconds".format(fin-start))
+        print("Ran in  {0:0.4f} seconds".format(fin - start))
 
     def create_matchups_alternate(self, num_rounds):
         # Round Robin alternate algorithm
@@ -43,7 +43,7 @@ class ChessTournament:
         print(output)
 
         fin = time.perf_counter()
-        print("Ran in {0:0.4f} seconds".format(fin-start))
+        print("Ran in {0:0.4f} seconds".format(fin - start))
 
 
 if __name__ == "__main__":
@@ -54,20 +54,20 @@ if __name__ == "__main__":
         dest="players_filename",
         help="filename containing list of players (one per line)",
         metavar="PLAYERS_FILENAME",
-        required=True
+        required=True,
     )
     parser.add_argument(
         "-r",
         "--num_rounds",
         dest="num_rounds",
         help="number of rounds to play (0 < r < num_players)",
-        required=True
+        required=True,
     )
     args = parser.parse_args()
     with open(args.players_filename) as f:
         players = [line.strip() for line in f]
     num_rounds = int(args.num_rounds)
-    
+
     ct = ChessTournament(players)
     ct.create_matchups_circle(num_rounds)
     ct.create_matchups_alternate(num_rounds)
