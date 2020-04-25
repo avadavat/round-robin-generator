@@ -10,5 +10,5 @@ pip install -r requirements.txt
 
 # Usage
 ```
-python tournament_logic.py -p test/players.txt
+python tournament_logic.py -p test/players.txt -r 3
 ```
