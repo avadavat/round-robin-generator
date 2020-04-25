@@ -3,7 +3,7 @@ import collections
 import pandas as pd
 import time
 from argparse import ArgumentParser
-from generate_matchups import generate_matchups
+from generate_matchups import generate_player_matchups
 from mike_round_robin import default_scramble
 
 random.seed(420)
@@ -21,28 +21,28 @@ class ChessTournament:
         # How long each game takes to play
         self.game_duration = 0
 
-    def create_matchups_2(self, num_rounds):
+    def create_matchups_circle(self, num_rounds):
+        # Create matchups using the circle method
+        start = time.perf_counter()
+
         # Randomly shuffle the player list
         players = self.players.copy()
-        random.shuffle(players)
-        n = len(players)
+        output = generate_player_matchups(num_rounds, players)
+        print(output)
 
-        start = time.perf_counter()
-        # Generate matchups for each round
-        for r in range(1, num_rounds + 1):
-            print("-~-~- Round {0} -~-~-".format(r))
-            matchups = generate_matchups(n, r)
-            for m in matchups:
-                print("{0} vs. {1}".format(players[m[0] - 1], players[m[1] - 1]))
         fin = time.perf_counter()
-        print(f"Ran in  {fin - start:0.4f} seconds")
+        print("Ran in  {0:0.4f} seconds".format(fin-start))
 
+    def create_matchups_alternate(self, num_rounds):
         # Round Robin alternate algorithm
         start = time.perf_counter()
-        output = default_scramble(3, players, n)
+
+        players = self.players.copy()
+        output = default_scramble(num_rounds, players)
         print(output)
+
         fin = time.perf_counter()
-        print(f"Ran in {fin - start:0.4f} seconds")
+        print("Ran in {0:0.4f} seconds".format(fin-start))
 
 
 if __name__ == "__main__":
@@ -53,19 +53,20 @@ if __name__ == "__main__":
         dest="players_filename",
         help="filename containing list of players (one per line)",
         metavar="PLAYERS_FILENAME",
+        required=True
     )
     parser.add_argument(
-        "-a",
-        "--alternate_matcher",
-        dest="alternate_matcher",
-        help="use the alernate matching algorithms",
-        action="store_true"
+        "-r",
+        "--num_rounds",
+        dest="num_rounds",
+        help="number of rounds to play (0 < r < num_players)",
+        required=True
     )
     args = parser.parse_args()
-    print(args)
     with open(args.players_filename) as f:
         players = [line.strip() for line in f]
+    num_rounds = int(args.num_rounds)
+    
     ct = ChessTournament(players)
-    print(args)
-    if args.alternate_matcher:
-        ct.create_matchups_2(3)
+    ct.create_matchups_circle(num_rounds)
+    ct.create_matchups_alternate(num_rounds)

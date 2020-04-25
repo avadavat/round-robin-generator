@@ -1,3 +1,6 @@
+import pandas as pd
+import random
+
 def apply_offset(p, n, o):
     if p == 1:
         return 1
@@ -42,5 +45,29 @@ def generate_matchups(n, r):
     matchups = []
     for i in range(len(top)):
         matchups.append((top[i], bottom[i]))
+    # Add bye player
+    if len(bottom) > len(top):
+        matchups.append((bottom[len(bottom)-1], None))
 
     return matchups
+
+# Takes a list of player names and returns the matchups as a pandas data frame
+def generate_player_matchups(num_rounds, players):
+    num_players = len(players)
+
+    # Create a dataframe to store the output.
+    matchup_df = pd.DataFrame(index=['Round ' + str(i) for i in range(1, num_rounds + 1)],
+                              columns=['Game ' + str(game_num) for game_num in
+                                       range(1, num_players // 2 + 1)])
+    # Randomly shuffle the player list
+    random.shuffle(players)
+
+    # Generate matchups for each round
+    for r in range(1, num_rounds + 1):
+        matchups = generate_matchups(num_players, r)
+        for i in range(len(matchups)):
+            m = matchups[i]
+            m_str = players[m[0] - 1] + ' vs. ' + players[m[1] - 1]
+            matchup_df.loc['Round ' + str(r), 'Game ' + str(i + 1)] = m_str
+    
+    return matchup_df
