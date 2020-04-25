@@ -12,6 +12,11 @@ def apply_offset(p, n, o):
     s = n - 1
     return ((p - 2 - o + s) % s) + 2
 
+
+def rotate_arr(arr, n, offset):
+    for i in range(len(arr)):
+        arr[i] = apply_offset(arr[i], n, offset)
+
 # Generates the matchups for n players playing the r-th round of the tournament
 def generate_matchups(n, r):
     if n <= 0:
@@ -29,14 +34,9 @@ def generate_matchups(n, r):
     # Change offsets based on round
     offset = r - 1
 
-    def rotate(arr):
-        new_arr = []
-        for a in arr:
-            new_arr.append(apply_offset(a, n, offset))
-        return new_arr
-
-    top = rotate(top)
-    bottom = rotate(bottom)
+    # Rotate the arrays based on offset
+    rotate_arr(top, n, offset)
+    rotate_arr(bottom, n, offset)
 
     # Match players
     matchups = []
@@ -44,9 +44,3 @@ def generate_matchups(n, r):
         matchups.append((top[i], bottom[i]))
 
     return matchups
-
-
-players = 6
-for r in range(1, players):
-    print('Round ' + str(r))
-    print(generate_matchups(players, r))
