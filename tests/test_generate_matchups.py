@@ -1,7 +1,5 @@
 from random import randint
-import sys
-sys.path.append('..')
-import generate_matchups
+from src import generate_matchups
 
 def test_apply_offset():
     for i in range(1, 10):
