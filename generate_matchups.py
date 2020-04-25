@@ -53,6 +53,8 @@ def generate_matchups(n, r):
 
 # Takes a list of player names and returns the matchups as a pandas data frame
 def generate_player_matchups(num_rounds, players):
+    # Randomly shuffle the player list
+    random.shuffle(players)
     num_players = len(players)
 
     # Create a dataframe to store the output.
@@ -62,8 +64,6 @@ def generate_player_matchups(num_rounds, players):
         game_cols.append(bye_key)
     matchup_df = pd.DataFrame(index=['Round ' + str(i) for i in range(1, num_rounds + 1)],
                               columns=game_cols)
-    # Randomly shuffle the player list
-    random.shuffle(players)
 
     # Generate matchups for each round
     for r in range(1, num_rounds + 1):

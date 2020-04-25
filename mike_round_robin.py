@@ -1,7 +1,11 @@
 import pandas as pd
+import random
 
 def default_scramble(num_rounds, players):
+    # Randomly shuffle the player list
+    random.shuffle(players)
     num_players = len(players)
+
     # Create a dataframe to store the output.
     matchup_df = pd.DataFrame(index=['Round ' + str(i) for i in range(1, num_rounds + 1)],
                               columns=['Game ' + str(game_num) for game_num in

@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 import collections
 import pandas as pd
 import time
@@ -6,7 +7,8 @@ from argparse import ArgumentParser
 from generate_matchups import generate_player_matchups
 from mike_round_robin import default_scramble
 
-random.seed(420)
+# random.seed(420)
+random.seed(datetime.now())
 
 # Prevent pandas from truncating output
 pd.set_option("display.max_rows", 500)
@@ -25,7 +27,6 @@ class ChessTournament:
         # Create matchups using the circle method
         start = time.perf_counter()
 
-        # Randomly shuffle the player list
         players = self.players.copy()
         output = generate_player_matchups(num_rounds, players)
         print(output)
