@@ -1,6 +1,7 @@
 import random
 import collections
 import pandas as pd
+from argparse import ArgumentParser
 
 random.seed(420)
 
@@ -62,7 +63,13 @@ class ChessTournament:
 
 
 if __name__ == '__main__':
-    players = ['Mike', 'Joe', 'Dan', 'Aaron', 'Chris', 'B-Rye', 'John', 'Suddy', 'Tim', 'Nicholas']
+    parser = ArgumentParser()
+    parser.add_argument("-p", "--players_filename", dest="players_filename", 
+        help="filename containing list of players (one per line)", metavar="PLAYERS_FILENAME")
+    args = parser.parse_args()
+
+    with open(args.players_filename) as f:
+        players = [line.strip() for line in f]
     ct = ChessTournament(players)
     ct.create_matchups(3)
     # Outputting the df of games to be played.
