@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from round_robin_generator.tournament_logic import RoundRobinGenerator
+from round_robin_generator.RoundRobinGenerator import RoundRobinGenerator
 
 if __name__ == "__main__":
     parser = ArgumentParser()
