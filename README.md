@@ -15,5 +15,5 @@ pip install -r requirements.txt
 # Usage
 
 ```
-python3 src/tournament_logic.py -p tests/players.txt -r 3
+python round_robin_generator/tournament_logic.py -p tests/players.txt -r 3
 ```
