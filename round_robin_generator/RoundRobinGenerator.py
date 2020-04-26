@@ -5,8 +5,9 @@ from datetime import datetime
 from enum import Enum
 
 import pandas as pd
-from round_robin_generator.generate_matchups import generate_player_matchups
-from round_robin_generator.mike_round_robin import default_scramble
+
+from round_robin_generator.matchup_generation_circle import generate_player_matchups
+from round_robin_generator.matchup_generation_default_scramble import default_scramble
 
 random.seed(datetime.now())
 
