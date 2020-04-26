@@ -1,6 +1,8 @@
 # round-robin-generator
 
-![Alt text](branding/Robin_Logo.png?style=centerme)
+<p align="center">
+  <img src=branding/Robin_Logo.png? alt="Sublime's custom image"/>
+</p>
 
 
 [![Codeship Status for avadavat/round-robin-generator](https://app.codeship.com/projects/deb1b7b0-6962-0138-9e23-22c0d1c6829f/status?branch=master)](https://app.codeship.com/projects/394216)
