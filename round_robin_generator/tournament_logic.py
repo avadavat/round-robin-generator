@@ -66,6 +66,6 @@ if __name__ == "__main__":
         players = [line.strip() for line in f]
     num_rounds = int(args.num_rounds)
 
-    ct = RoundRobinGenerator()
-    ct.create_matchups_circle(players, num_rounds)
-    ct.create_matchups_alternate(players, num_rounds)
+    rrg = RoundRobinGenerator()
+    rrg.create_matchups_circle(players, num_rounds)
+    rrg.create_matchups_alternate(players, num_rounds)
