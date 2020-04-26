@@ -65,6 +65,7 @@ if __name__ == "__main__":
         required=True,
     )
     args = parser.parse_args()
+    print(args)
     with open(args.players_filename) as f:
         players = [line.strip() for line in f]
     num_rounds = int(args.num_rounds)

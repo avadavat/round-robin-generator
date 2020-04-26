@@ -1,12 +1,14 @@
-import random
-
 import pandas as pd
 
 
 def default_scramble(num_rounds, players):
-    # Randomly shuffle the player list
-    random.shuffle(players)
     num_players = len(players)
+    if num_players <= 0:
+        raise Exception("Number of players must be positive.")
+    if num_players % 2 != 0:
+        raise Exception("Number of players must be even.")
+    if num_rounds <= 0 or num_rounds >= num_players:
+        raise Exception("Round number must be within [1,n-1].")
 
     # Create a dataframe to store the output.
     matchup_df = pd.DataFrame(
