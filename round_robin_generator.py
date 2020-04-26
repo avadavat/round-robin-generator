@@ -22,15 +22,21 @@ if __name__ == "__main__":
         help="number of rounds to play (0 < r < num_players)",
         required=True,
     )
+    parser.add_argument(
+        "-i",
+        "--matchup_implementation",
+        dest="matchup_implementation",
+        help="Algorithm to use to generate the random matchups",
+        required=False,
+    )
     args = parser.parse_args()
     with open(args.players_filename) as f:
         players = [line.strip() for line in f]
     num_rounds = int(args.num_rounds)
+    matchup_implementation = (
+        args.matchup_implementation or MatchupImplementation.DEFAULT_SCRAMBLE
+    )
 
-    rrg_default = RoundRobinGenerator()
+    rrg_default = RoundRobinGenerator(matchup_implementation=matchup_implementation)
     default_matchups = rrg_default.create_matchups(players, num_rounds)
     print(default_matchups)
-
-    rrg_circle = RoundRobinGenerator(MatchupImplementation.CIRCLE)
-    circle_matchups = rrg_circle.create_matchups(players, num_rounds)
-    print(circle_matchups)
