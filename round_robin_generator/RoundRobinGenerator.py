@@ -8,7 +8,6 @@ import pandas as pd
 from round_robin_generator.generate_matchups import generate_player_matchups
 from round_robin_generator.mike_round_robin import default_scramble
 
-# random.seed(420)
 random.seed(datetime.now())
 
 # Prevent pandas from truncating output
