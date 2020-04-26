@@ -1,6 +1,5 @@
 import collections
 import random
-import time
 from datetime import datetime
 from enum import Enum
 
@@ -8,6 +7,7 @@ import pandas as pd
 
 from round_robin_generator.matchup_generation_circle import generate_player_matchups
 from round_robin_generator.matchup_generation_default_scramble import default_scramble
+from round_robin_generator.decorators import time_performance
 
 random.seed(datetime.now())
 
@@ -31,10 +31,10 @@ class RoundRobinGenerator:
     def __init__(self, matchup_implementation=MatchupImplementation.DEFAULT_SCRAMBLE):
         self.matchup_implementation = matchup_implementation
 
+    @time_performance
     def create_matchups(self, player_list, num_rounds):
-        start = time.perf_counter()
-
         players = player_list.copy()
+
         output = {
             MatchupImplementation.CIRCLE: generate_player_matchups(
                 num_rounds, player_list
@@ -44,6 +44,3 @@ class RoundRobinGenerator:
             ),
         }[self.matchup_implementation]
         print(output)
-
-        fin = time.perf_counter()
-        print("Ran in  {0:0.4f} seconds".format(fin - start))
