@@ -1,22 +1,22 @@
 from random import randint
 from round_robin_generator import generate_matchups
+import pytest
 
 
-def test_apply_offset():
-    for i in range(1, 10):
-        assert (
-            generate_matchups.apply_offset(i, 10, 0) == i
-        ), "Should be idempotent on offset 0"
+@pytest.mark.parametrize(
+    "p,expected", [(2, 7), (3, 8), (4, 2), (5, 3), (6, 4), (7, 5), (8, 6)]
+)
+def test_apply_offset(p, expected):
+    assert generate_matchups.apply_offset(p, 8, 2) == expected
 
-    for i in range(1, 10):
-        assert (
-            generate_matchups.apply_offset(1, i, randint(1, i)) == 1
-        ), "1 should be fixed"
 
-    assert generate_matchups.apply_offset(8, 8, 2) == 6, "Should be 6"
-    assert generate_matchups.apply_offset(7, 8, 2) == 5, "Should be 5"
-    assert generate_matchups.apply_offset(6, 8, 2) == 4, "Should be 4"
-    assert generate_matchups.apply_offset(5, 8, 2) == 3, "Should be 3"
-    assert generate_matchups.apply_offset(4, 8, 2) == 2, "Should be 2"
-    assert generate_matchups.apply_offset(3, 8, 2) == 8, "Should be 8"
-    assert generate_matchups.apply_offset(2, 8, 2) == 7, "Should be 7"
+@pytest.mark.parametrize("p", range(1, 10))
+def test_apply_offset__offset_0(p):
+    assert (
+        generate_matchups.apply_offset(p, 10, 0) == p
+    ), "Should be idempotent on offset 0"
+
+
+@pytest.mark.parametrize("n", range(1, 10))
+def test_applyoffset__p_equals_1(n):
+    assert generate_matchups.apply_offset(1, n, randint(1, n)) == 1, "1 should be fixed"
