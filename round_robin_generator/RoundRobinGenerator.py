@@ -35,11 +35,8 @@ class RoundRobinGenerator:
     def create_matchups(self, player_list, num_rounds):
         players = player_list.copy()
 
-        return {
-            MatchupImplementation.CIRCLE: generate_player_matchups(
-                num_rounds, player_list
-            ),
-            MatchupImplementation.DEFAULT_SCRAMBLE: default_scramble(
-                num_rounds, player_list
-            ),
-        }[self.matchup_implementation]
+        if self.matchup_implementation == MatchupImplementation.DEFAULT_SCRAMBLE:
+            return default_scramble(num_rounds, players)
+        else:
+            return generate_player_matchups(num_rounds, players)
+

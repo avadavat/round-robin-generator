@@ -21,10 +21,6 @@ def test_default_scramble(num_rounds):
 
 
 def test_invalid_round_numbers():
-    # Where the number of rounds equals the number of players
-    with pytest.raises(Exception):
-        default_scramble(4, test_players)
-
     with pytest.raises(Exception):
         default_scramble(0, test_players)
 
