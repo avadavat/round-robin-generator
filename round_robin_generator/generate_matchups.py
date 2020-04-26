@@ -1,5 +1,6 @@
-import pandas as pd
 import random
+
+import pandas as pd
 
 
 def apply_offset(p, n, o):

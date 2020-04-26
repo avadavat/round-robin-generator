@@ -1,9 +1,10 @@
-import random
-from datetime import datetime
 import collections
-import pandas as pd
+import random
 import time
 from argparse import ArgumentParser
+from datetime import datetime
+
+import pandas as pd
 from generate_matchups import generate_player_matchups
 from mike_round_robin import default_scramble
 

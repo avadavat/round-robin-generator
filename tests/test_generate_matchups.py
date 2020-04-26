@@ -1,6 +1,7 @@
 from random import randint
-from round_robin_generator import generate_matchups
+
 import pytest
+from round_robin_generator import generate_matchups
 
 
 @pytest.mark.parametrize(

@@ -1,5 +1,6 @@
-import pandas as pd
 import random
+
+import pandas as pd
 
 
 def default_scramble(num_rounds, players):
