@@ -28,36 +28,21 @@ class RoundRobinGenerator:
     """
 
     def __init__(self, matchup_implementation=MatchupImplementation.DEFAULT_SCRAMBLE):
-        pass
+        self.matchup_implementation = matchup_implementation
 
     def create_matchups(self, player_list, num_rounds):
-        return {
-            MatchupImplementation.CIRCLE: create_matchups_circle(
-                player_list, num_rounds
-            ),
-            MatchupImplementation.DEFAULT_SCRAMBLE: create_matchups_alternate(
-                player_list, num_rounds
-            ),
-        }[matchup_implementation]
-
-    def create_matchups_circle(self, player_list, num_rounds):
-        # Create matchups using the circle method
         start = time.perf_counter()
 
         players = player_list.copy()
-        output = generate_player_matchups(num_rounds, players)
+        output = {
+            MatchupImplementation.CIRCLE: generate_player_matchups(
+                num_rounds, player_list
+            ),
+            MatchupImplementation.DEFAULT_SCRAMBLE: default_scramble(
+                num_rounds, player_list
+            ),
+        }[self.matchup_implementation]
         print(output)
 
         fin = time.perf_counter()
         print("Ran in  {0:0.4f} seconds".format(fin - start))
-
-    def create_matchups_alternate(self, player_list, num_rounds):
-        # Round Robin alternate algorithm
-        start = time.perf_counter()
-
-        players = player_list.copy()
-        output = default_scramble(num_rounds, players)
-        print(output)
-
-        fin = time.perf_counter()
-        print("Ran in {0:0.4f} seconds".format(fin - start))

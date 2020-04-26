@@ -1,6 +1,9 @@
 from argparse import ArgumentParser
 
-from round_robin_generator.RoundRobinGenerator import RoundRobinGenerator
+from round_robin_generator.RoundRobinGenerator import (  # isort:skip
+    MatchupImplementation,
+    RoundRobinGenerator,
+)
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -24,6 +27,8 @@ if __name__ == "__main__":
         players = [line.strip() for line in f]
     num_rounds = int(args.num_rounds)
 
-    rrg = RoundRobinGenerator()
-    rrg.create_matchups_circle(players, num_rounds)
-    rrg.create_matchups_alternate(players, num_rounds)
+    rrg_default = RoundRobinGenerator()
+    rrg_default.create_matchups(players, num_rounds)
+
+    rrg_circle = RoundRobinGenerator(MatchupImplementation.CIRCLE)
+    rrg_circle.create_matchups(players, num_rounds)
