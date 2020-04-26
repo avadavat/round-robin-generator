@@ -19,8 +19,7 @@ pd.set_option("display.width", 1000)
 
 class RoundRobinGenerator:
     def __init__(self):
-        # How long each game takes to play
-        self.game_duration = 0
+        pass
 
     def create_matchups_circle(self, player_list, num_rounds):
         # Create matchups using the circle method
