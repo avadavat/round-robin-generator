@@ -35,7 +35,7 @@ class RoundRobinGenerator:
     def create_matchups(self, player_list, num_rounds):
         players = player_list.copy()
 
-        output = {
+        return {
             MatchupImplementation.CIRCLE: generate_player_matchups(
                 num_rounds, player_list
             ),
@@ -43,4 +43,3 @@ class RoundRobinGenerator:
                 num_rounds, player_list
             ),
         }[self.matchup_implementation]
-        print(output)

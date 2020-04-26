@@ -28,7 +28,9 @@ if __name__ == "__main__":
     num_rounds = int(args.num_rounds)
 
     rrg_default = RoundRobinGenerator()
-    rrg_default.create_matchups(players, num_rounds)
+    default_matchups = rrg_default.create_matchups(players, num_rounds)
+    print(default_matchups)
 
     rrg_circle = RoundRobinGenerator(MatchupImplementation.CIRCLE)
-    rrg_circle.create_matchups(players, num_rounds)
+    circle_matchups = rrg_circle.create_matchups(players, num_rounds)
+    print(circle_matchups)
