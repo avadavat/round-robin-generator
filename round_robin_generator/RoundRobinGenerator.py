@@ -6,7 +6,6 @@ from enum import Enum
 import pandas as pd
 
 from round_robin_generator.matchup_generation_circle import generate_player_matchups
-from round_robin_generator.matchup_generation_default_scramble import default_scramble
 from round_robin_generator.decorators import time_performance
 
 random.seed(datetime.now())
@@ -19,7 +18,6 @@ pd.set_option("display.width", 1000)
 
 class MatchupImplementation(Enum):
     CIRCLE = "CIRCLE"
-    DEFAULT_SCRAMBLE = "DEFAULT_SCRAMBLE"
 
 
 class RoundRobinGenerator:
@@ -41,5 +39,4 @@ class RoundRobinGenerator:
 
         if self.matchup_implementation == MatchupImplementation.CIRCLE.name:
             return generate_player_matchups(num_rounds, players)
-        else:
-            return default_scramble(num_rounds, players)
+

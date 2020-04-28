@@ -59,7 +59,7 @@ if __name__ == "__main__":
         players = [line.strip() for line in f]
     num_rounds = int(args.num_rounds)
     matchup_implementation = (
-            args.matchup_implementation or MatchupImplementation.DEFAULT_SCRAMBLE
+            args.matchup_implementation or MatchupImplementation.CIRCLE
     )
     rrg_default = RoundRobinGenerator(tournament_start_time=args.tournament_start_time,
                                       game_duration=args.game_duration, game_stagger=args.game_stagger,
