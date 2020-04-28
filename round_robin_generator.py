@@ -26,6 +26,7 @@ if __name__ == "__main__":
         "-i",
         "--matchup_implementation",
         dest="matchup_implementation",
+        default="CIRCLE",
         help="Algorithm to use to generate the random matchups",
         required=False,
     )
@@ -58,12 +59,13 @@ if __name__ == "__main__":
     with open(args.players_filename) as f:
         players = [line.strip() for line in f]
     num_rounds = int(args.num_rounds)
-    matchup_implementation = (
-            args.matchup_implementation or MatchupImplementation.CIRCLE
-    )
+    # matchup_implementation = (
+    #         args.matchup_implementation or MatchupImplementation.CIRCLE
+    # )
     rrg_default = RoundRobinGenerator(tournament_start_time=args.tournament_start_time,
                                       game_duration=args.game_duration, game_stagger=args.game_stagger,
-                                      matchup_implementation=matchup_implementation)
+                                      matchup_implementation=args.matchup_implementation)
+
     default_matchups = rrg_default.create_matchups(players, num_rounds)
     print(default_matchups)
     default_times = generate_times(default_matchups, rrg_default.tournament_start_time, rrg_default.game_duration,

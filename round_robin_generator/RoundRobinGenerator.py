@@ -27,7 +27,7 @@ class RoundRobinGenerator:
     """
 
     def __init__(self, tournament_start_time, game_duration, game_stagger,
-                 matchup_implementation=MatchupImplementation.DEFAULT_SCRAMBLE):
+                 matchup_implementation=MatchupImplementation.CIRCLE):
         self.tournament_start_time = datetime.strptime(tournament_start_time, '%H:%M%p')
         self.game_duration = int(game_duration)
         self.game_stagger = int(game_stagger)
