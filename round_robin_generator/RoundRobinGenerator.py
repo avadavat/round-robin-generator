@@ -28,7 +28,11 @@ class RoundRobinGenerator:
     :param implementation: Sets the algorithm used to generate the round robin matchups. Default is the Circle method.
     """
 
-    def __init__(self, matchup_implementation=MatchupImplementation.DEFAULT_SCRAMBLE):
+    def __init__(self, tournament_start_time, game_duration, game_stagger,
+                 matchup_implementation=MatchupImplementation.DEFAULT_SCRAMBLE):
+        self.tournament_start_time = datetime.strptime(tournament_start_time, '%H:%M%p')
+        self.game_duration = int(game_duration)
+        self.game_stagger = int(game_stagger)
         self.matchup_implementation = matchup_implementation
 
     @time_performance
