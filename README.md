@@ -12,6 +12,15 @@ cd round-robin-generator
 pip install -r requirements.txt
 ```
 
+## React Installation
+
+```
+pip install -r requierments2.txt
+cd react-app
+npm run build
+npm start
+```
+
 ## Usage
 
 ```
